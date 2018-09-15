@@ -1,0 +1,11 @@
+*.pyc
+*.py~
+*.*~
+*.csv
+*.csv~
+.pydevproject
+.settings/
+*.log
+.idea
+__/*
+*.sqlite3
