@@ -4,47 +4,33 @@ import sys
 
 sys.path.append(os.path.join(os.path.dirname(__file__), "..", ".."))
 
-from billiard import Process
 from scrapy.crawler import CrawlerProcess
+from billiard import Process
 from scrapy.utils.project import get_project_settings
-from scrapy_app import app
+#from scrapy_app import app
+from scrapy.settings import Settings
 
-settings = get_project_settings()
 
-
-class HunterProcess(Process):
-    def __init__(self, url):
+class HunterCrawler(Process):
+    def __init__(self, spider, urls):
         Process.__init__(self)
-        self.crawler = CrawlerProcess(get_project_settings())
-        self.url = url
+        settings = Settings()
+        self.crawler = CrawlerProcess(settings)
+        self.urls = urls
+        self.spider = spider
 
     def run(self):
-        from scrapy_app.spiders import Hunter
-        self.crawler.crawl(Hunter, self.url)
+        if self.spider == 'hunter':
+            from scrapy_app.spiders import Hunter
+            self.crawler.crawl(Hunter, self.urls)
+        elif self.spider == 'sources':
+            from scrapy_app.spiders import Sources
+            self.crawler.crawl(Sources, self.urls)
         self.crawler.start()
 
 
-class SourcesProcess(Process):
-    def __init__(self, url):
-        Process.__init__(self)
-        self.crawler = CrawlerProcess(get_project_settings())
-        self.url = url
-
-    def run(self):
-        from scrapy_app.spiders import Sources
-        self.crawler.crawl(Sources, self.url)
-        self.crawler.start()
-
-
-@app.task(name='crawler.scrapy_app.tasks.run_spider')
-def run_spider(url):
-    crawler = HunterProcess(url)
+def run_spider(spider, urls):
+    crawler = HunterCrawler(spider, urls)
     crawler.start()
     crawler.join()
 
-
-@app.task(name='crawler.scrapy_app.tasks.run_sources')
-def run_sources(url):
-    crawler = SourcesProcess(url)
-    crawler.start()
-    crawler.join()

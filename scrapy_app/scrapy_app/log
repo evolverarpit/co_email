@@ -1,0 +1,144 @@
+2018-09-17 13:38:33 [scrapy.utils.log] INFO: Scrapy 1.5.0 started (bot: scrapy_app)
+2018-09-17 13:38:33 [scrapy.utils.log] INFO: Versions: lxml 4.2.1.0, libxml2 2.9.8, cssselect 1.0.3, parsel 1.4.0, w3lib 1.19.0, Twisted 18.4.0, Python 3.5.2 (default, Nov 23 2017, 16:37:01) - [GCC 5.4.0 20160609], pyOpenSSL 17.5.0 (OpenSSL 1.1.0h  27 Mar 2018), cryptography 2.2.2, Platform Linux-4.4.127-mainline-rev1-x86_64-with-Ubuntu-16.04-xenial
+2018-09-17 13:38:40 [scrapy.utils.log] INFO: Scrapy 1.5.0 started (bot: scrapy_app)
+2018-09-17 13:38:40 [scrapy.utils.log] INFO: Versions: lxml 4.2.1.0, libxml2 2.9.8, cssselect 1.0.3, parsel 1.4.0, w3lib 1.19.0, Twisted 18.4.0, Python 3.5.2 (default, Nov 23 2017, 16:37:01) - [GCC 5.4.0 20160609], pyOpenSSL 17.5.0 (OpenSSL 1.1.0h  27 Mar 2018), cryptography 2.2.2, Platform Linux-4.4.127-mainline-rev1-x86_64-with-Ubuntu-16.04-xenial
+2018-09-18 14:39:46 [scrapy.utils.log] INFO: Scrapy 1.5.0 started (bot: scrapy_app)
+2018-09-18 14:39:46 [scrapy.utils.log] INFO: Versions: lxml 4.2.1.0, libxml2 2.9.8, cssselect 1.0.3, parsel 1.4.0, w3lib 1.19.0, Twisted 18.4.0, Python 3.5.2 (default, Nov 23 2017, 16:37:01) - [GCC 5.4.0 20160609], pyOpenSSL 17.5.0 (OpenSSL 1.1.0h  27 Mar 2018), cryptography 2.2.2, Platform Linux-4.4.127-mainline-rev1-x86_64-with-Ubuntu-16.04-xenial
+2018-09-18 14:39:46 [scrapy.crawler] INFO: Overridden settings: {'SPIDER_MODULES': ['scrapy_app.spiders'], 'ROBOTSTXT_OBEY': True, 'NEWSPIDER_MODULE': 'scrapy_app.spiders', 'LOG_FILE': './log', 'RETRY_TIMES': 10, 'DOWNLOAD_DELAY': 3, 'BOT_NAME': 'scrapy_app', 'RETRY_HTTP_CODES': [500, 503, 504, 400, 403, 404, 408]}
+2018-09-18 14:39:47 [scrapy.middleware] INFO: Enabled extensions:
+['scrapy.extensions.logstats.LogStats',
+ 'scrapy.extensions.corestats.CoreStats',
+ 'scrapy.extensions.telnet.TelnetConsole',
+ 'scrapy.extensions.memusage.MemoryUsage']
+2018-09-18 14:39:47 [twisted] CRITICAL: Unhandled error in Deferred:
+2018-09-18 14:39:47 [twisted] CRITICAL: 
+Traceback (most recent call last):
+  File "/root/venv_co_email/lib/python3.5/site-packages/scrapy/utils/misc.py", line 47, in load_object
+    obj = getattr(mod, name)
+AttributeError: module 'scrapy_app.middlewares' has no attribute 'HunterDownloaderMiddleware'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/venv_co_email/lib/python3.5/site-packages/twisted/internet/defer.py", line 1386, in _inlineCallbacks
+    result = g.send(result)
+  File "/root/venv_co_email/lib/python3.5/site-packages/scrapy/crawler.py", line 80, in crawl
+    self.engine = self._create_engine()
+  File "/root/venv_co_email/lib/python3.5/site-packages/scrapy/crawler.py", line 105, in _create_engine
+    return ExecutionEngine(self, lambda _: self.stop())
+  File "/root/venv_co_email/lib/python3.5/site-packages/scrapy/core/engine.py", line 69, in __init__
+    self.downloader = downloader_cls(crawler)
+  File "/root/venv_co_email/lib/python3.5/site-packages/scrapy/core/downloader/__init__.py", line 88, in __init__
+    self.middleware = DownloaderMiddlewareManager.from_crawler(crawler)
+  File "/root/venv_co_email/lib/python3.5/site-packages/scrapy/middleware.py", line 58, in from_crawler
+    return cls.from_settings(crawler.settings, crawler)
+  File "/root/venv_co_email/lib/python3.5/site-packages/scrapy/middleware.py", line 34, in from_settings
+    mwcls = load_object(clspath)
+  File "/root/venv_co_email/lib/python3.5/site-packages/scrapy/utils/misc.py", line 49, in load_object
+    raise NameError("Module '%s' doesn't define any object named '%s'" % (module, name))
+NameError: Module 'scrapy_app.middlewares' doesn't define any object named 'HunterDownloaderMiddleware'
+2018-09-18 15:34:01 [scrapy.utils.log] INFO: Scrapy 1.5.0 started (bot: scrapy_app)
+2018-09-18 15:34:01 [scrapy.utils.log] INFO: Versions: lxml 4.2.1.0, libxml2 2.9.8, cssselect 1.0.3, parsel 1.4.0, w3lib 1.19.0, Twisted 18.4.0, Python 3.5.2 (default, Nov 23 2017, 16:37:01) - [GCC 5.4.0 20160609], pyOpenSSL 17.5.0 (OpenSSL 1.1.0h  27 Mar 2018), cryptography 2.2.2, Platform Linux-4.4.127-mainline-rev1-x86_64-with-Ubuntu-16.04-xenial
+2018-09-18 15:34:01 [scrapy.crawler] INFO: Overridden settings: {'RETRY_TIMES': 10, 'RETRY_HTTP_CODES': [500, 503, 504, 400, 403, 404, 408], 'LOG_FILE': './log', 'BOT_NAME': 'scrapy_app', 'ROBOTSTXT_OBEY': True, 'NEWSPIDER_MODULE': 'scrapy_app.spiders', 'SPIDER_MODULES': ['scrapy_app.spiders'], 'DOWNLOAD_DELAY': 3}
+2018-09-18 15:34:01 [scrapy.middleware] INFO: Enabled extensions:
+['scrapy.extensions.corestats.CoreStats',
+ 'scrapy.extensions.logstats.LogStats',
+ 'scrapy.extensions.memusage.MemoryUsage',
+ 'scrapy.extensions.telnet.TelnetConsole']
+2018-09-18 15:34:01 [twisted] CRITICAL: Unhandled error in Deferred:
+2018-09-18 15:34:01 [twisted] CRITICAL: 
+Traceback (most recent call last):
+  File "/root/venv_co_email/lib/python3.5/site-packages/scrapy/utils/misc.py", line 47, in load_object
+    obj = getattr(mod, name)
+AttributeError: module 'scrapy_app.middlewares' has no attribute 'HunterDownloaderMiddleware'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/venv_co_email/lib/python3.5/site-packages/twisted/internet/defer.py", line 1386, in _inlineCallbacks
+    result = g.send(result)
+  File "/root/venv_co_email/lib/python3.5/site-packages/scrapy/crawler.py", line 80, in crawl
+    self.engine = self._create_engine()
+  File "/root/venv_co_email/lib/python3.5/site-packages/scrapy/crawler.py", line 105, in _create_engine
+    return ExecutionEngine(self, lambda _: self.stop())
+  File "/root/venv_co_email/lib/python3.5/site-packages/scrapy/core/engine.py", line 69, in __init__
+    self.downloader = downloader_cls(crawler)
+  File "/root/venv_co_email/lib/python3.5/site-packages/scrapy/core/downloader/__init__.py", line 88, in __init__
+    self.middleware = DownloaderMiddlewareManager.from_crawler(crawler)
+  File "/root/venv_co_email/lib/python3.5/site-packages/scrapy/middleware.py", line 58, in from_crawler
+    return cls.from_settings(crawler.settings, crawler)
+  File "/root/venv_co_email/lib/python3.5/site-packages/scrapy/middleware.py", line 34, in from_settings
+    mwcls = load_object(clspath)
+  File "/root/venv_co_email/lib/python3.5/site-packages/scrapy/utils/misc.py", line 49, in load_object
+    raise NameError("Module '%s' doesn't define any object named '%s'" % (module, name))
+NameError: Module 'scrapy_app.middlewares' doesn't define any object named 'HunterDownloaderMiddleware'
+2018-09-18 15:36:59 [scrapy.utils.log] INFO: Scrapy 1.5.0 started (bot: scrapy_app)
+2018-09-18 15:36:59 [scrapy.utils.log] INFO: Versions: lxml 4.2.1.0, libxml2 2.9.8, cssselect 1.0.3, parsel 1.4.0, w3lib 1.19.0, Twisted 18.4.0, Python 3.5.2 (default, Nov 23 2017, 16:37:01) - [GCC 5.4.0 20160609], pyOpenSSL 17.5.0 (OpenSSL 1.1.0h  27 Mar 2018), cryptography 2.2.2, Platform Linux-4.4.127-mainline-rev1-x86_64-with-Ubuntu-16.04-xenial
+2018-09-18 15:36:59 [scrapy.crawler] INFO: Overridden settings: {'SPIDER_MODULES': ['scrapy_app.spiders'], 'BOT_NAME': 'scrapy_app', 'RETRY_HTTP_CODES': [500, 503, 504, 400, 403, 404, 408], 'ROBOTSTXT_OBEY': True, 'DOWNLOAD_DELAY': 3, 'RETRY_TIMES': 10, 'LOG_FILE': './log', 'NEWSPIDER_MODULE': 'scrapy_app.spiders'}
+2018-09-18 15:36:59 [scrapy.middleware] INFO: Enabled extensions:
+['scrapy.extensions.corestats.CoreStats',
+ 'scrapy.extensions.logstats.LogStats',
+ 'scrapy.extensions.memusage.MemoryUsage',
+ 'scrapy.extensions.telnet.TelnetConsole']
+2018-09-18 15:36:59 [twisted] CRITICAL: Unhandled error in Deferred:
+2018-09-18 15:36:59 [twisted] CRITICAL: 
+Traceback (most recent call last):
+  File "/root/venv_co_email/lib/python3.5/site-packages/scrapy/utils/misc.py", line 47, in load_object
+    obj = getattr(mod, name)
+AttributeError: module 'scrapy_app.middlewares' has no attribute 'HunterDownloaderMiddleware'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/venv_co_email/lib/python3.5/site-packages/twisted/internet/defer.py", line 1386, in _inlineCallbacks
+    result = g.send(result)
+  File "/root/venv_co_email/lib/python3.5/site-packages/scrapy/crawler.py", line 80, in crawl
+    self.engine = self._create_engine()
+  File "/root/venv_co_email/lib/python3.5/site-packages/scrapy/crawler.py", line 105, in _create_engine
+    return ExecutionEngine(self, lambda _: self.stop())
+  File "/root/venv_co_email/lib/python3.5/site-packages/scrapy/core/engine.py", line 69, in __init__
+    self.downloader = downloader_cls(crawler)
+  File "/root/venv_co_email/lib/python3.5/site-packages/scrapy/core/downloader/__init__.py", line 88, in __init__
+    self.middleware = DownloaderMiddlewareManager.from_crawler(crawler)
+  File "/root/venv_co_email/lib/python3.5/site-packages/scrapy/middleware.py", line 58, in from_crawler
+    return cls.from_settings(crawler.settings, crawler)
+  File "/root/venv_co_email/lib/python3.5/site-packages/scrapy/middleware.py", line 34, in from_settings
+    mwcls = load_object(clspath)
+  File "/root/venv_co_email/lib/python3.5/site-packages/scrapy/utils/misc.py", line 49, in load_object
+    raise NameError("Module '%s' doesn't define any object named '%s'" % (module, name))
+NameError: Module 'scrapy_app.middlewares' doesn't define any object named 'HunterDownloaderMiddleware'
+2018-09-18 15:37:53 [scrapy.utils.log] INFO: Scrapy 1.5.0 started (bot: scrapy_app)
+2018-09-18 15:37:53 [scrapy.utils.log] INFO: Versions: lxml 4.2.1.0, libxml2 2.9.8, cssselect 1.0.3, parsel 1.4.0, w3lib 1.19.0, Twisted 18.4.0, Python 3.5.2 (default, Nov 23 2017, 16:37:01) - [GCC 5.4.0 20160609], pyOpenSSL 17.5.0 (OpenSSL 1.1.0h  27 Mar 2018), cryptography 2.2.2, Platform Linux-4.4.127-mainline-rev1-x86_64-with-Ubuntu-16.04-xenial
+2018-09-18 15:37:53 [scrapy.crawler] INFO: Overridden settings: {'BOT_NAME': 'scrapy_app', 'DOWNLOAD_DELAY': 3, 'ROBOTSTXT_OBEY': True, 'RETRY_TIMES': 10, 'LOG_FILE': './log', 'SPIDER_MODULES': ['scrapy_app.spiders'], 'NEWSPIDER_MODULE': 'scrapy_app.spiders', 'RETRY_HTTP_CODES': [500, 503, 504, 400, 403, 404, 408]}
+2018-09-18 15:37:53 [scrapy.middleware] INFO: Enabled extensions:
+['scrapy.extensions.corestats.CoreStats',
+ 'scrapy.extensions.telnet.TelnetConsole',
+ 'scrapy.extensions.logstats.LogStats',
+ 'scrapy.extensions.memusage.MemoryUsage']
+2018-09-18 15:37:53 [twisted] CRITICAL: Unhandled error in Deferred:
+2018-09-18 15:37:53 [twisted] CRITICAL: 
+Traceback (most recent call last):
+  File "/root/venv_co_email/lib/python3.5/site-packages/scrapy/utils/misc.py", line 47, in load_object
+    obj = getattr(mod, name)
+AttributeError: module 'scrapy_app.middlewares' has no attribute 'HunterDownloaderMiddleware'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/venv_co_email/lib/python3.5/site-packages/twisted/internet/defer.py", line 1386, in _inlineCallbacks
+    result = g.send(result)
+  File "/root/venv_co_email/lib/python3.5/site-packages/scrapy/crawler.py", line 80, in crawl
+    self.engine = self._create_engine()
+  File "/root/venv_co_email/lib/python3.5/site-packages/scrapy/crawler.py", line 105, in _create_engine
+    return ExecutionEngine(self, lambda _: self.stop())
+  File "/root/venv_co_email/lib/python3.5/site-packages/scrapy/core/engine.py", line 69, in __init__
+    self.downloader = downloader_cls(crawler)
+  File "/root/venv_co_email/lib/python3.5/site-packages/scrapy/core/downloader/__init__.py", line 88, in __init__
+    self.middleware = DownloaderMiddlewareManager.from_crawler(crawler)
+  File "/root/venv_co_email/lib/python3.5/site-packages/scrapy/middleware.py", line 58, in from_crawler
+    return cls.from_settings(crawler.settings, crawler)
+  File "/root/venv_co_email/lib/python3.5/site-packages/scrapy/middleware.py", line 34, in from_settings
+    mwcls = load_object(clspath)
+  File "/root/venv_co_email/lib/python3.5/site-packages/scrapy/utils/misc.py", line 49, in load_object
+    raise NameError("Module '%s' doesn't define any object named '%s'" % (module, name))
+NameError: Module 'scrapy_app.middlewares' doesn't define any object named 'HunterDownloaderMiddleware'
