@@ -5,7 +5,7 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 
-import json
+#import json
 # class ScrapyAppPipeline(object):
 #     def process_item(self, item, spider):
 #         return item
@@ -23,7 +23,7 @@ from __future__ import absolute_import
 
 
 
-from main.models import HunterItemBaba,SourceItemBaba
+from main2.models import HunterItemBaba,SourceItemBaba
 import json
 
 
@@ -39,9 +39,10 @@ class HunterMongoPipeline:
         url = HunterItemBaba.object.filter(url=data.pop('url'))
         if url:
         	url[0].data = json.dumps(data)
-        	url[0].save()
+        	#url[0].save()
         else:
-	        HunterItemBaba.object.create(data=json.dumps(data))
+                pass
+	        #HunterItemBaba.object.create(url=data.pop('url'),data=json.dumps(data))
         return 'saved {} successfully to companies'.format(data['_id'])
 
 
@@ -56,8 +57,9 @@ class SourcesMongoPipeline:
         url = SourceItemBaba.object.filter(url=data.pop('url'))
         if url:
         	url[0].data = json.dumps(data)
-        	url[0].save()
+        	#url[0].save()
         else:
-	        SourceItemBaba.object.create(data=json.dumps(data))
+                pass
+	        #SourceItemBaba.object.create(url=data.pop('url'),data=json.dumps(data))
         return 'saved {} successfully to sources'.format(data['_id'])
 

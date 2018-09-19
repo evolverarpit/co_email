@@ -50,15 +50,15 @@ URL_FILES = ['https://hunter.io/companies/letters/0/1/'
 			,'https://hunter.io/companies/letters/y/1/'
 			,'https://hunter.io/companies/letters/z/1/']
 
-@csrf_exempt
-@require_http_methods(['POST', 'GET']) # only get and post
+from scrapyd_api import ScrapydAPI
+
+scrapyd = ScrapydAPI('http://localhost:6800')
+scrapyd.schedule('project_name', 'spider_name')
+#@csrf_exempt
+#@require_http_methods(['POST', 'GET']) # only get and post
 def crawl(request):
-    for urls in URL_FILES:
-        result = run_spider.delay('hunter', urls)
-
-    return JsonResponse({'status':True})
-
-
-
+    scrapyd = ScrapydAPI('http://localhost:6800')
+    scrapyd.schedule('scrapy_app', 'hunter')
+    return
 
 

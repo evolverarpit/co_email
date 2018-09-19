@@ -1,7 +1,9 @@
 # coding=utf-8
 # !/usr/bin/env python3
 from __future__ import absolute_import
-
+import json
+import psycopg2
+#from main2.models import HunterItemBaba,SourceItemBaba,Comp,Hont,CompanyItemBaba
 import os
 import sys
 
@@ -54,6 +56,7 @@ class Hunter(scrapy.Spider):
                 pattern = None
             url = response.meta.get('company_url')
             company = CompanyItem()
+            #import pdb;pdb.set_trace()
             company['name'] = Selector(response).xpath(
                 '/html/body/div[1]/div/div[1]/h1/text()').extract_first().strip()
             company['url'] = url
@@ -67,15 +70,45 @@ class Hunter(scrapy.Spider):
                 except:
                     pass
                 item = HunterItem()
-                item['name'] = email.css(
-                    'span.name::text').extract_first() or None
-                item['sources'] = email.css(
-                    'div.sources-list a::attr(href)').extract()[:SOURCE_LIMIT]  # get max of 3 links
-                item['email'] = get_email(
-                    item['sources'], url, email_to_search)
+                item['name'] = email.css('span.name::text').extract_first() or None
+                item['sources'] = email.css('div.sources-list a::attr(href)').extract()[:SOURCE_LIMIT]  # get max of 3 links
+                item['email'] = get_email(item['sources'], url, email_to_search)
                 item['pattern'] = pattern or self.get_pattern(item, url)
                 item['html'] = email.extract()
                 company['employees'].append(item)
+                name11 = email.css('span.name::text').extract_first() or None
+                sources11 = email.css('div.sources-list a::attr(href)').extract()[:SOURCE_LIMIT]  # get max of 3 links
+                email11 = get_email(sources11, url, email_to_search)
+                pattern11 = pattern or self.get_pattern(item, url)
+                html11 = email.extract()
+                conn = psycopg2.connect(host="localhost",database="coemail", user="postgres", password="postgres")
+                query = "select url from main2_hunteritemnew where name='" + name11 + "',email='"+email11+"',pattern='"+pattern11+"',sources='"+sources11+"';"
+                cur = conn.cursor()
+                cur.execute(query)
+                if not cur.fetchall():
+                    cur.execute("insert into main2_hunteritemnew(name,email,pattern,sources,html) values('"+name11+ "', '"+email11+"','"+pattern11+"','"+sources11+"','"+html11+"',);")
+                    #cur.execute("insert into main2_hunteritemnew(name,email,pattern,sources,html) values('"+item['name']+ "', '"+item['email']+"','"+item['pattern']+"','"+item['sources']+"','"+item['html']+"',);")
+                cur.close()
+                conn.close()
+            data = dict(company)
+            data['_id'] = url
+            conn = psycopg2.connect(host="localhost",database="coemail", user="postgres", password="postgres")
+            query = "select url from main2_companyitemnew where url='" + url + "';"
+            cur = conn.cursor()
+            cur.execute(query)
+            if cur.fetchall():
+                cur.execute("update main2_companyitemnew set name = '"+company['name']+"', employees = '"+json.dumps(company['employees'])+"' where url='"+url+"';")
+               
+                conn.commit()
+            else:
+                cur.execute("insert into main2_companyitemnew(name,url,employees) values('"+company['name']+ "', '"+url+"','"+json.dumps(json.dumps(company['employees']))+"');")
+                #cur.execute("insert into main2_companyitembaba(url,data) values('"+url+"','"+json.dumps(json.dumps(data))+"');")
+                conn.commit()
+            cur.close()
+            conn.close()
+            print('************************')
+            print('************************')
+            print('************************')
             yield company
         except AttributeError as e:
             print(str(e.args))
