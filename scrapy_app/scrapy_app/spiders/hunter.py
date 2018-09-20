@@ -6,7 +6,7 @@ import psycopg2
 #from main2.models import HunterItemBaba,SourceItemBaba,Comp,Hont,CompanyItemBaba
 import os
 import sys
-
+import pickle
 sys.path.append(os.path.join(os.path.dirname(__file__), "..", ".."))
 
 import scrapy
@@ -48,7 +48,7 @@ class Hunter(scrapy.Spider):
     def get_sources(self, response):
         try:
             results = Selector(response).xpath(
-                '/html/body/div[1]/div/div[3]').css('div.result')
+                '/html/body/div[1]/div/div[4]').css('div.result')
             try:
                 pattern = Selector(response).xpath(
                     '/html/body/div[1]/div/div[2]/strong/text()').extract_first().strip()
@@ -74,19 +74,46 @@ class Hunter(scrapy.Spider):
                 item['sources'] = email.css('div.sources-list a::attr(href)').extract()[:SOURCE_LIMIT]  # get max of 3 links
                 item['email'] = get_email(item['sources'], url, email_to_search)
                 item['pattern'] = pattern or self.get_pattern(item, url)
-                item['html'] = email.extract()
-                company['employees'].append(item)
-                name11 = email.css('span.name::text').extract_first() or None
+                item['html'] = json.dumps(email.extract())
+                company['employees'].append([item['name'],item['email'],item['pattern']])
+                name11 = email.css('span.name::text').extract_first() or ''
+                if not name11:
+                    name11=""
                 sources11 = email.css('div.sources-list a::attr(href)').extract()[:SOURCE_LIMIT]  # get max of 3 links
                 email11 = get_email(sources11, url, email_to_search)
                 pattern11 = pattern or self.get_pattern(item, url)
-                html11 = email.extract()
+                html11 = json.dumps(email.extract())
+                #print(sources11)
+                #print(email11)
+                if not sources11:
+                    sources11 = json.dumps([])
+                else:
+                    sources11 = pickle.dumps(sources11)
+                
                 conn = psycopg2.connect(host="localhost",database="coemail", user="postgres", password="postgres")
-                query = "select url from main2_hunteritemnew where name='" + name11 + "',email='"+email11+"',pattern='"+pattern11+"',sources='"+sources11+"';"
+                if not html11:
+                    html11=""
+                if not email11:
+                    email11=""
+                if not pattern11:
+                    pattern11=""
+                sources11 = ""
+                query = "select * from main2_hunteritemnew where name='" + name11 + "' and email='"+email11+"' and pattern='"+pattern11+"';"
+                #print(query)
                 cur = conn.cursor()
                 cur.execute(query)
                 if not cur.fetchall():
-                    cur.execute("insert into main2_hunteritemnew(name,email,pattern,sources,html) values('"+name11+ "', '"+email11+"','"+pattern11+"','"+sources11+"','"+html11+"',);")
+                    query = "insert into main2_hunteritemnew(name,email,pattern) values('"+str(name11)+ "', '"+str(email11)+"','"+str(pattern11)+"');"
+                    #print(query)
+                    cur.execute(query)
+                    conn.commit()
+                    print('******************')
+                    print('******************')
+                    print('******************')
+                    print('******************')
+                    print('******************')
+                    print('******************')
+
                     #cur.execute("insert into main2_hunteritemnew(name,email,pattern,sources,html) values('"+item['name']+ "', '"+item['email']+"','"+item['pattern']+"','"+item['sources']+"','"+item['html']+"',);")
                 cur.close()
                 conn.close()
@@ -97,18 +124,20 @@ class Hunter(scrapy.Spider):
             cur = conn.cursor()
             cur.execute(query)
             if cur.fetchall():
-                cur.execute("update main2_companyitemnew set name = '"+company['name']+"', employees = '"+json.dumps(company['employees'])+"' where url='"+url+"';")
+                cur.execute("update main2_companyitemnew set name = '"+company['name']+"', employees = '"+str(json.dumps(company['employees']))+"' where url='"+url+"';")
+                #cur.execute("update main2_companyitemnew set name = '"+company['name']+"', employees = '"+pickle.dumps(company['employees'])+"' where url='"+url+"';")
                
                 conn.commit()
             else:
-                cur.execute("insert into main2_companyitemnew(name,url,employees) values('"+company['name']+ "', '"+url+"','"+json.dumps(json.dumps(company['employees']))+"');")
-                #cur.execute("insert into main2_companyitembaba(url,data) values('"+url+"','"+json.dumps(json.dumps(data))+"');")
+                cur.execute("insert into main2_companyitemnew(name,url,employees) values('"+company['name']+ "', '"+url+"','"+str(json.dumps(company['employees']))+"');") 
+                #cur.execute("insert into main2_companyitemnew(name,url,employees) values('"+company['name']+ "', '"+url+"','"+pickle.dumps((company['employees']))+"');")
+                #cur.execute("insert into main2_companyitembaba(url,data) values('"+url+"','"+pickle.dumps(json.dumps(data))+"');")
                 conn.commit()
             cur.close()
             conn.close()
-            print('************************')
-            print('************************')
-            print('************************')
+            print('===========================')
+            print('===========================')
+            print('===========================')
             yield company
         except AttributeError as e:
             print(str(e.args))
