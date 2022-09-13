@@ -15,7 +15,7 @@ constantly==15.1.0
 cryptography==2.2.2
 cssselect==1.0.3
 Flask==1.0.2
-flower==0.9.2
+flower==1.2.0
 hyperlink==18.0.0
 idna==2.6
 incremental==17.5.0
